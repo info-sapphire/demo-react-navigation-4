@@ -16,7 +16,7 @@ export const MainScreen = ({ navigation }) => {
 
   return (
     <PostList
-      data={DATA.filter(post => post.booked)}
+      data={DATA}
       onOpen={openPostHandler}
     />
   )

@@ -14,7 +14,12 @@ export const BookedScreen = ({ navigation }) => {
     })
   }
 
-  return <PostList data={DATA} onOpen={openPostHandler} />
+  return (
+    <PostList
+      data={DATA.filter(post => post.booked)}
+      onOpen={openPostHandler}
+    />
+  )
 }
 
 BookedScreen.navigationOptions = {

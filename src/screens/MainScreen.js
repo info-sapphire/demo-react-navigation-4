@@ -1,12 +1,18 @@
 import React from 'react'
 import { StyleSheet, View, FlatList } from 'react-native'
-import { Post } from '../components/Post'
+import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 
+import { AppHeaderIcon } from '../components/AppHeaderIcon'
+import { Post } from '../components/Post'
 import { DATA } from '../data'
 
 export const MainScreen = ({ navigation }) => {
   const openPostHandler = post => {
-    navigation.navigate('Post', { postId: post.id, date: post.date })
+    navigation.navigate('Post', {
+      postId: post.id,
+      booked: post.booked,
+      date: post.date
+    })
   }
 
   return (
@@ -21,7 +27,25 @@ export const MainScreen = ({ navigation }) => {
 }
 
 MainScreen.navigationOptions = {
-  headerTitle: 'Мой блог'
+  headerTitle: 'Мой блог',
+  headerRight: () => (
+    <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
+      <Item
+        title="Take photo"
+        iconName="ios-camera"
+        onPress={() => console.log('Press photo')}
+      />
+    </HeaderButtons>
+  ),
+  headerLeft: () => (
+    <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
+      <Item
+        title="Toggle Drawer"
+        iconName="ios-camera"
+        onPress={() => console.log('Toggle drawer')}
+      />
+    </HeaderButtons>
+  )
 }
 
 const styles = StyleSheet.create({

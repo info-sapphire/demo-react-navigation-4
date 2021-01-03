@@ -11,24 +11,21 @@ import { PostScreen } from '../screens/PostScreen'
 import { BookedScreen } from '../screens/BookedScreen'
 import { THEME } from '../theme'
 
-const navigatorOptions = initialRouteName => ({
-  initialRouteName,
+const navigatorOptions = {
   defaultNavigationOptions: {
     headerStyle: {
       backgroundColor: Platform.os === 'android' ? THEME.MAIN_COLOR : '#fff'
     },
     headerTintColor: Platform.os === 'android' ? '#fff' : THEME.MAIN_COLOR
   }
-})
+}
 
 const PostNavigator = createStackNavigator(
   {
     Main: MainScreen,
-    Post: {
-      screen: PostScreen
-    }
+    Post: PostScreen
   },
-  { ...navigatorOptions('Main') }
+  navigatorOptions
 )
 
 const BookedNavigator = createStackNavigator(
@@ -36,7 +33,7 @@ const BookedNavigator = createStackNavigator(
     Booked: BookedScreen,
     Post: PostScreen
   },
-  { ...navigatorOptions('Booked') }
+  { ...navigatorOptions, initialRouteName: 'Booked' }
 )
 const bottomTabsConfig = {
   Post: {

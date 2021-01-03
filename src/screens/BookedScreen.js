@@ -1,9 +1,8 @@
 import React from 'react'
-import { StyleSheet, View, FlatList } from 'react-native'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 
 import { AppHeaderIcon } from '../components/AppHeaderIcon'
-import { Post } from '../components/Post'
+import { PostList } from '../components/PostList'
 import { DATA } from '../data'
 
 export const BookedScreen = ({ navigation }) => {
@@ -15,15 +14,7 @@ export const BookedScreen = ({ navigation }) => {
     })
   }
 
-  return (
-    <View style={styles.wrapper}>
-      <FlatList
-        data={DATA.filter(post => post.booked)}
-        keyExtractor={post => post.id.toString()}
-        renderItem={({ item }) => <Post post={item} onOpen={openPostHandler} />}
-      />
-    </View>
-  )
+  return <PostList data={DATA} onOpen={openPostHandler} />
 }
 
 BookedScreen.navigationOptions = {
@@ -38,9 +29,3 @@ BookedScreen.navigationOptions = {
     </HeaderButtons>
   )
 }
-
-const styles = StyleSheet.create({
-  wrapper: {
-    padding: 10
-  }
-})

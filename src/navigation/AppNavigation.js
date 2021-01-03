@@ -1,5 +1,5 @@
 import React from 'react'
-import { createAppContainer, createNavigator } from 'react-navigation'
+import { createAppContainer } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs'
@@ -86,10 +86,36 @@ const CreateNavigator = createStackNavigator(
   navigatorOptions
 )
 
-const MainNavigator = createDrawerNavigator({
-  PostTabs: BottomNavigator,
-  About: AboutNavigator,
-  Create: CreateNavigator
-})
+const MainNavigator = createDrawerNavigator(
+  {
+    PostTabs: {
+      screen: BottomNavigator,
+      navigationOptions: {
+        drawerLabel: 'Главная',
+        drawerIcon: <Ionicons name="ios-star" size={20} />
+      }
+    },
+    About: {
+      screen: AboutNavigator,
+      navigationOptions: {
+        drawerLabel: 'О приложении',
+        drawerIcon: <Ionicons name="ios-information-circle-outline" size={20} />
+      }
+    },
+    Create: {
+      screen: CreateNavigator,
+      navigationOptions: {
+        drawerLabel: 'Новый пост',
+        drawerIcon: <Ionicons name="ios-pencil-sharp" size={20} />
+      }
+    }
+  },
+  {
+    contentOptions: {
+      activeTintColor: THEME.MAIN_COLOR,
+      labelStyle: { fontFamily: 'open-bold' }
+    }
+  }
+)
 
 export const AppNavigation = createAppContainer(MainNavigator)

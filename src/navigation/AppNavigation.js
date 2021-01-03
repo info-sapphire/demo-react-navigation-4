@@ -1,10 +1,24 @@
+import React from 'react'
 import { createAppContainer } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
+import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { Platform } from 'react-native'
+import { Ionicons } from '@expo/vector-icons'
 
 import { MainScreen } from '../screens/MainScreen'
 import { PostScreen } from '../screens/PostScreen'
+import { BookedScreen } from '../screens/BookedScreen'
 import { THEME } from '../theme'
+
+const navigatorOptions = initialRouteName => ({
+  initialRouteName,
+  defaultNavigationOptions: {
+    headerStyle: {
+      backgroundColor: Platform.os === 'android' ? THEME.MAIN_COLOR : '#fff'
+    },
+    headerTintColor: Platform.os === 'android' ? '#fff' : THEME.MAIN_COLOR
+  }
+})
 
 const PostNavigator = createStackNavigator(
   {
@@ -13,15 +27,41 @@ const PostNavigator = createStackNavigator(
       screen: PostScreen
     }
   },
+  { ...navigatorOptions('Main') }
+)
+
+const BookedNavigator = createStackNavigator(
   {
-    initialRouteName: 'Main',
-    defaultNavigationOptions: {
-      headerStyle: {
-        backgroundColor: Platform.os === 'android' ? THEME.MAIN_COLOR : '#fff'
-      },
-      headerTintColor: Platform.os === 'android' ? '#fff' : THEME.MAIN_COLOR
+    Booked: BookedScreen,
+    Post: PostScreen
+  },
+  { ...navigatorOptions('Booked') }
+)
+
+const BottomNavigator = createBottomTabNavigator(
+  {
+    Post: {
+      screen: PostNavigator,
+      navigationOptions: {
+        tabBarIcon: info => (
+          <Ionicons name="ios-albums" size={25} color={info.tintColor} />
+        )
+      }
+    },
+    Booked: {
+      screen: BookedNavigator,
+      navigationOptions: {
+        tabBarIcon: info => (
+          <Ionicons name="ios-star" size={25} color={info.tintColor} />
+        )
+      }
+    }
+  },
+  {
+    tabBarOptions: {
+      activeTintColor: THEME.MAIN_COLOR
     }
   }
 )
 
-export const AppNavigation = createAppContainer(PostNavigator)
+export const AppNavigation = createAppContainer(BottomNavigator)

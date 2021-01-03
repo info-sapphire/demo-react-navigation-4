@@ -16,19 +16,21 @@ export const PostScreen = ({ navigation }) => {
   const postId = navigation.getParam('postId')
   const post = DATA.find(post => post.id === postId)
 
-  Alert.alert(
-    'Удаление поста',
-    'Вы точно хотите удалить пост?',
-    [
-      { text: 'Отмена', style: 'cancel' },
-      {
-        text: 'Удалить',
-        style: 'destructive',
-        onPress: () => {}
-      }
-    ],
-    { cancelable: false }
-  )
+  const removeHandler = () => {
+    Alert.alert(
+      'Удаление поста',
+      'Вы точно хотите удалить пост?',
+      [
+        { text: 'Отмена', style: 'cancel' },
+        {
+          text: 'Удалить',
+          style: 'destructive',
+          onPress: () => {}
+        }
+      ],
+      { cancelable: false }
+    )
+  }
 
   return (
     <ScrollView style={styles.wrapper}>

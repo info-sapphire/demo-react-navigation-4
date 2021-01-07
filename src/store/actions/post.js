@@ -1,3 +1,5 @@
+import * as FileSystem from 'expo-file-system'
+
 import { DB } from '../../db'
 import { ADD_POST, LOAD_POSTS, REMOVE_POST, TOGGLE_BOOKED } from '../types'
 
@@ -26,11 +28,24 @@ export const removePost = id => {
   }
 }
 
-export const addPost = post => {
-  post.id = Date.now().toString()
+export const addPost = post => async dispatch => {
+  const fileName = post.img.split('/').pop()
+  const newPath = FileSystem.documentDirectory + fileName
 
-  return {
-    type: ADD_POST,
-    payload: post
+  try {
+    await FileSystem.moveAsync({
+      to: newPath,
+      from: post.img
+    })
+
+    const payload = { ...post, img: newPath }
+    const postId = await DB.createPost(payload)
+
+    dispatch({
+      type: ADD_POST,
+      payload: { ...payload, id: postId }
+    })
+  } catch (error) {
+    console.error(error)
   }
 }

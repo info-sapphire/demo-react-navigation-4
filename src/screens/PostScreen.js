@@ -64,7 +64,7 @@ export const PostScreen = ({ navigation }) => {
 
   return (
     <ScrollView style={styles.wrapper}>
-      <Image style={styles.image} source={{ uri: post.img }} />
+      <Image style={styles.image} source={{ uri: post.image }} />
       <View style={styles.textWrap}>
         <Text style={styles.title}>{post.text}</Text>
       </View>

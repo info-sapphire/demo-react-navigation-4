@@ -33,9 +33,35 @@ export class DB {
     return new Promise((resolve, reject) => {
       db.transaction(tx => {
         tx.executeSql(
-          `INSERT INTO posts (text, date, booked, image) VALUES (?, ?, ?, ?)`,
+          'INSERT INTO `posts` (text, date, booked, image) VALUES (?, ?, ?, ?)',
           [text, date, 0, img],
           (_, { insertId }) => resolve(insertId),
+          (_, error) => reject(error)
+        )
+      })
+    })
+  }
+
+  static updatePost({ booked, id }) {
+    return new Promise((resolve, reject) => {
+      db.transaction(tx => {
+        tx.executeSql(
+          'UPDATE `posts` SET booked = ? WHERE id = ?',
+          [parseInt(booked), id],
+          () => resolve(),
+          (_, error) => reject(error)
+        )
+      })
+    })
+  }
+
+  static removePost({ id }) {
+    return new Promise((resolve, reject) => {
+      db.transaction(tx => {
+        tx.executeSql(
+          'DELETE FROM `posts` WHERE id = ?',
+          [id],
+          () => resolve(),
           (_, error) => reject(error)
         )
       })

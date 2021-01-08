@@ -19,6 +19,7 @@ export const MainScreen = ({ navigation }) => {
 
   const allPosts = useSelector(state => state.post.allPosts)
   const loading = useSelector(state => state.post.loading)
+  
   const dispatch = useDispatch()
 
   useEffect(() => {

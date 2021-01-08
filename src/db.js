@@ -29,12 +29,12 @@ export class DB {
     })
   }
 
-  static createPost({ text, date, img }) {
+  static createPost({ text, date, image }) {
     return new Promise((resolve, reject) => {
       db.transaction(tx => {
         tx.executeSql(
           'INSERT INTO `posts` (text, date, booked, image) VALUES (?, ?, ?, ?)',
-          [text, date, 0, img],
+          [text, date, 0, image],
           (_, { insertId }) => resolve(insertId),
           (_, error) => reject(error)
         )
@@ -47,7 +47,7 @@ export class DB {
       db.transaction(tx => {
         tx.executeSql(
           'UPDATE `posts` SET booked = ? WHERE id = ?',
-          [parseInt(booked), id],
+          [+booked, id],
           () => resolve(),
           (_, error) => reject(error)
         )

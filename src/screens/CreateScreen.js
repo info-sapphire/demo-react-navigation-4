@@ -27,7 +27,7 @@ export const CreateScreen = ({ navigation }) => {
     dispatch(
       addPost({
         text: text,
-        img: imgRef.current,
+        image: imgRef.current,
         date: new Date().toJSON()
       })
     )

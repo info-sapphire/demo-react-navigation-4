@@ -15,7 +15,6 @@ export const loadPosts = () => {
 };
 
 export const toggleBooked = (post) => async (dispatch) => {
-  console.log(post)
   await DB.updatePost(post);
 
   dispatch({
